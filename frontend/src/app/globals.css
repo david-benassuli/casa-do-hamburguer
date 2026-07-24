@@ -1,0 +1,19 @@
+@import "tailwindcss";
+
+@theme {
+  --color-bg-main: #161410;
+  --color-secondary: #F2DAAC;
+  --color-text-main: #FFFFFF;
+  --color-text-low: #848484;
+  --color-my-red: #B72F18;
+  --color-my-green: #6B8E23;
+  --color-my-yellow: #D4A017;
+  --color-text-dark: #32343E;
+
+  --font-Sen: "Sen", sans-serif;
+}
+
+header, section {
+  max-width: 1200px;
+  width: 100%;
+}
