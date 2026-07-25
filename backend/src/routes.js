@@ -9,7 +9,7 @@ export const router = Router()
 
 // Login | Logout
 router.post('/login', postLogin)
-router.post('/logout', verifyAuth, postLogout)
+router.post('/logout', postLogout)
 
 // Users
 router.get('/users', getUsers)
