@@ -41,7 +41,7 @@ export const postProduct = async (req, res) => {
         }
         
         if (!req.file) {
-            return res.status(400).json({message: "Imagem é obrigatória."});
+            return res.status(400).json({message: "Imagem é obrigatória"});
         }
 
         const base64 = req.file.buffer.toString("base64");
