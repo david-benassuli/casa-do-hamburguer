@@ -4,11 +4,10 @@ import { useUser } from "@/hook/UseUser"
 import Image from "next/image"
 import Link from "next/link"
 
-import { LogOut, ShoppingCart, Plus, Box, LayoutDashboard, X } from "lucide-react"
+import { LogOut, ShoppingCart, Plus, Box, LayoutDashboard, Menu, Divide, X } from "lucide-react"
 import { usePathname } from "next/navigation"
 import { useEffect, useState } from "react"
 import { useCart } from "@/hook/UseCart"
-import { CardCart } from "./CardCart"
 import { Cart } from "./Cart"
 import { AddProduct } from "./AddProduct"
 
@@ -20,7 +19,9 @@ export function Header() {
     const [openCart, setOpenCart] = useState<boolean>(false) 
     const [openAddProduct, setOpenAddProduct] = useState<boolean>(false)
 
-    const {cart, setCart} = useCart()
+    const [openOptions, setOpenOptions] = useState<boolean>(false)
+
+    const {cart} = useCart()
 
     function getNavItemClass(path: string) {
         const baseClass = "flex justify-center items-center border rounded-md w-[35px] h-[35px] hover:cursor-pointer transition-colors duration-200 "
@@ -65,40 +66,77 @@ export function Header() {
     return (
         <header className="flex flex-row justify-between items-center w-full">
             <Image src='/logo.png' alt="Logo" width={100} height={100} />
-
+            
             {user ? 
-                <div className="flex flex-row items-center gap-10">
-                    {user.admin && <div className="flex flex-row gap-2 ">
-                        <Link href={"/"}>
-                            <div className={getNavItemClass('/')}>
-                                <Box size={18}/>
+                <>
+                    <div className="flex flex-row items-center gap-10 max-md:hidden">
+                        {user.admin && <div className="flex flex-row gap-2 ">
+                            <Link href={"/"}>
+                                <div className={getNavItemClass('/')}>
+                                    <Box size={18}/>
+                                </div>
+                            </Link>
+                            <Link href={"/orders"}>
+                                <div className={getNavItemClass('/orders')}>
+                                    <LayoutDashboard size={18}/>
+                                </div>
+                            </Link>
+                            <div className={getNavItemClass('/plus')}>
+                                <Plus size={18} onClick={() => setOpenAddProduct(true)}/>
                             </div>
-                        </Link>
-                        <Link href={"/orders"}>
-                            <div className={getNavItemClass('/orders')}>
-                                <LayoutDashboard size={18}/>
-                            </div>
-                        </Link>
-                        <div className={getNavItemClass('/plus')}>
-                            <Plus size={18} onClick={() => setOpenAddProduct(true)}/>
+                        </div>}
+                        <div className="relative">
+                            <ShoppingCart className="text-text-main hover:cursor-pointer hover:text-secondary transition-colors duration-200" onClick={() => setOpenCart(true)}/>
+                            <p className="absolute bg-secondary flex justify-center items-center w-5 h-5 rounded-full -top-3 -right-3 ">{cart.length > 0 ? cart.map(item => item.amount).reduce((acc, cur) => acc + cur) : 0}</p>
                         </div>
-                    </div>}
-                    <div className="relative">
-                        <ShoppingCart className="text-text-main hover:cursor-pointer hover:text-secondary transition-colors duration-200" onClick={() => setOpenCart(true)}/>
-                        <p className="absolute bg-secondary flex justify-center items-center w-5 h-5 rounded-full -top-3 -right-3 ">{cart.length > 0 ? cart.map(item => item.amount).reduce((acc, cur) => acc + cur) : 0}</p>
+                        <div className="flex flex-row items-center gap-2">
+                            <p className="text-text-main font-bold">Olá, {user.name}</p>
+                            <LogOut className="text-secondary hover:cursor-pointer hover:text-text-main transition-colors duration-200"
+                                onClick={handleLogout}
+                            />
+                        </div>
                     </div>
-                    <div className="flex flex-row items-center gap-2">
-                        <p className="text-text-main font-bold">Olá, {user.name}</p>
-                        <LogOut className="text-secondary hover:cursor-pointer hover:text-text-main transition-colors duration-200"
-                            onClick={handleLogout}
-                        />
-                    </div>
-                </div>
+                    <Menu className="md:hidden text-text-main hover:cursor-pointer hover:scale-105 duration-200" onClick={() => setOpenOptions(true)}/>
+                </>
             : 
                 <Link href='/login'>
                     <button type="button" className={`px-8 py-1 rounded-md font-bold bg-secondary text-bg-main hover:cursor-pointer hover:scale-102 duration-200`}
                     >Entrar</button>
                 </Link>
+            }
+            {openOptions && user &&
+                <div className="md:hidden absolute top-5 left-0 w-full bg-black border-t border-b border-secondary flex flex-row gap-5 justify-between items-center p-5">
+                    <div className="flex flex-row gap-5 items-center flex-wrap">
+                        <div className="flex flex-row gap-2 ">
+                            <Link href={"/"}>
+                                <div className={getNavItemClass('/')}>
+                                    <Box size={18}/>
+                                </div>
+                            </Link>
+                            <Link href={"/orders"}>
+                                <div className={getNavItemClass('/orders')}>
+                                    <LayoutDashboard size={18}/>
+                                </div>
+                            </Link>
+                            <div className={getNavItemClass('/plus')}>
+                                <Plus size={18} onClick={() => setOpenAddProduct(true)}/>
+                            </div>
+                        </div>
+                        <div className="relative">
+                            <ShoppingCart className="text-text-main hover:cursor-pointer hover:text-secondary transition-colors duration-200" onClick={() => setOpenCart(true)}/>
+                            <p className="absolute bg-secondary flex justify-center items-center w-5 h-5 rounded-full -top-3 -right-3 ">{cart.length > 0 ? cart.map(item => item.amount).reduce((acc, cur) => acc + cur) : 0}</p>
+                        </div>
+                        
+                        <div className="flex flex-row items-center gap-2">
+                            <p className="text-text-main font-bold">Olá, {user.name}</p>
+                            <LogOut className="text-secondary hover:cursor-pointer hover:text-text-main transition-colors duration-200"
+                                onClick={handleLogout}
+                            />
+                        </div>
+                    </div>
+                    <X onClick={() => setOpenOptions(false)} className="text-text-main justify-self-end"/>
+
+                </div>
             }
 
             {openCart && <Cart setOpenCart={setOpenCart}/>}

@@ -48,7 +48,7 @@ export function Cart(props: CartProps) {
         
 
     return (
-        <div className="fixed top-0 right-0 w-[30vw] h-screen bg-secondary flex flex-col justify-between p-5 overflow-auto gap-5 z-1">
+        <div className="fixed top-0 right-0 w-[30vw] max-md:w-full h-screen bg-secondary flex flex-col justify-between p-5 overflow-auto gap-5 z-1">
             <div className="flex flex-col gap-5">
                 <div className="flex flex-row justify-between">
                     <h2 className="text-2xl font-bold text-text-dark">Meu Carrinho</h2>

@@ -49,39 +49,39 @@ export function CardProduct(props: CardProductProps) {
     return (
         <div className="flex flex-row gap-2 max-md:flex-wrap">
             <Image src={props.imgUrl} alt="Menu Item"  width={180} height={180} className="rounded-sm"/>
-            <div className="flex flex-col justify-between w-full">
+            <div className="flex flex-col justify-between w-full gap-2">
                 <div className="flex flex-col gap-1">
-                    <div className="flex flex-row justify-between">
-                        <h2 className="text-text-main text-2xl">{props.name}</h2>
-                        {user?.admin && <button type="button" className="p-1 border border-my-red text-my-red uppercase rounded-md hover:cursor-pointer hover:text-my-red/60 hover:border-my-red/60 transition-colors duration-200"
-                            onClick={() => {
-                                setOpenModal(true)
-                            }}
-                        >DESATIVAR</button>}
-                    </div>
+                    <h2 className="text-text-main text-2xl">{props.name}</h2>    
                     <p className="text-text-low text-xl">{props.desc}</p>
                 </div>
 
-                <div className="flex gap-2 justify-end w-full text-md items-center">
-                    <p className="text-secondary font-bold">R${props.price.toFixed(2).replace('.', ',')}</p>
-                    <ShoppingCart className="w-5 h-5 text-text-main hover:cursor-pointer hover:text-text-low transition-colors duration-100"
+                <div className="flex flex-row justify-between w-full text-md items-center flex-wrap-reverse gap-2">
+                    {user?.admin && <button type="button" className="p-1 border border-my-red text-my-red uppercase rounded-md hover:cursor-pointer hover:text-my-red/60 hover:border-my-red/60 transition-colors duration-200"
                         onClick={() => {
-                            const newItem: ProductCartType = {
-                                idCartItem: crypto.randomUUID(),
-                                idProduct: props.id,
-                                name: props.name,
-                                price: props.price, 
-                                amount: 1,
-                                tag: props.tag,
-                                imgUrl: props.imgUrl
-                            }
-                            if (!cart.filter(item => item.idProduct === newItem.idProduct).length)
-                                setCart(prev => [...prev, newItem])
-                            else {
-                                setCart(prev => prev.map(item => item.idProduct === newItem.idProduct ? {...item, amount: item.amount + 1} : item))
-                            }
+                            setOpenModal(true)
                         }}
-                    />
+                    >DESATIVAR</button>}
+                    <div className="flex text-md gap-2">
+                        <p className="text-secondary font-bold">R${props.price.toFixed(2).replace('.', ',')}</p>
+                        <ShoppingCart className="w-5 h-5 text-text-main hover:cursor-pointer hover:text-text-low transition-colors duration-100"
+                            onClick={() => {
+                                const newItem: ProductCartType = {
+                                    idCartItem: crypto.randomUUID(),
+                                    idProduct: props.id,
+                                    name: props.name,
+                                    price: props.price,
+                                    amount: 1,
+                                    tag: props.tag,
+                                    imgUrl: props.imgUrl
+                                }
+                                if (!cart.filter(item => item.idProduct === newItem.idProduct).length)
+                                    setCart(prev => [...prev, newItem])
+                                else {
+                                    setCart(prev => prev.map(item => item.idProduct === newItem.idProduct ? {...item, amount: item.amount + 1} : item))
+                                }
+                            }}
+                        />
+                    </div>
                 </div>
 
                 {openModal && 
