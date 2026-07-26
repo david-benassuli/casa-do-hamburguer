@@ -105,7 +105,7 @@ export function Header() {
                 </Link>
             }
             {openOptions && user &&
-                <div className="md:hidden h-screen w-screen bg-bg-main/95 absolute top-0 left-0 p-4 flex flex-col gap-5">
+                <div className="md:hidden h-screen w-screen bg-bg-main/95 absolute top-0 left-0 p-4 flex flex-col gap-5 z-1">
                     <header className="flex flex-row justify-between items-center">
                         <Image src={'/logo.png'} alt="Logo image" width={100} height={100}/>
                         <X className="text-text-main hover:cursor-pointer" onClick={() => setOpenOptions(false)}/>
@@ -118,15 +118,25 @@ export function Header() {
                         </div>
                     </div>
                     <div className="flex flex-row items-center justify-between group hover:cursor-pointer" onClick={() => setOpenOptions(false)}>
-                        <div className="flex flex-row items-center gap-4">
+                        <Link href={('/')} className="flex flex-row items-center gap-4">
                             <Hamburger className="bg-secondary/20 text-secondary p-2 rounded-md w-15 h-15" />
                             <div className="flex flex-col justify-between">
                                 <p className="text-text-main text-[clamp(1rem,5vw,1.5rem)]">Produtos</p>
                                 <p className="text-text-low text-[clamp(0.8rem,5vw,1.rem)]">Ver produtos</p>
                             </div>
-                        </div>
+                        </Link>
                         <ChevronRight className="-translate-x-10 group-hover:-translate-x-2 duration-200 text-xl text-secondary max-[420px]:hidden" />
                     </div>
+                    {user.admin && <div className="flex flex-row items-center justify-between group hover:cursor-pointer" onClick={() => setOpenOptions(false)}>
+                        <Link href={'/orders'} className="flex flex-row items-center gap-4">
+                            <LayoutDashboard className="bg-secondary/20 text-secondary p-2 rounded-md w-15 h-15" />
+                            <div className="flex flex-col justify-between">
+                                <p className="text-text-main text-[clamp(1rem,5vw,1.5rem)]">Pedidos</p>
+                                <p className="text-text-low text-[clamp(0.8rem,5vw,1.rem)]">Ver pedidos</p>
+                            </div>
+                        </Link>
+                        <ChevronRight className="-translate-x-10 group-hover:-translate-x-2 duration-200 text-xl text-secondary max-[420px]:hidden" />
+                    </div>}
                     <div className="flex flex-row items-center justify-between group hover:cursor-pointer" onClick={() => setOpenCart(true)}>
                         <div className="flex flex-row items-center gap-4">
                             <ShoppingCart className="bg-secondary/20 text-secondary p-2 rounded-md w-15 h-15" />
@@ -140,7 +150,7 @@ export function Header() {
                         </div>
                         <ChevronRight className="-translate-x-10 group-hover:-translate-x-2 duration-200 text-xl text-secondary max-[420px]:hidden" />
                     </div>
-                    <div className="flex flex-row items-center justify-between group hover:cursor-pointer" onClick={() => setOpenAddProduct(true)}>
+                    {user.admin && <div className="flex flex-row items-center justify-between group hover:cursor-pointer" onClick={() => setOpenAddProduct(true)}>
                         <div className="flex flex-row items-center gap-4">
                             <Plus className="bg-secondary/20 text-secondary p-2 rounded-md w-15 h-15" />
                             <div className="flex flex-col justify-between">
@@ -149,7 +159,7 @@ export function Header() {
                             </div>
                         </div>
                         <ChevronRight className="-translate-x-10 group-hover:-translate-x-2 duration-200 text-xl text-secondary max-[420px]:hidden" />
-                    </div>
+                    </div>}
                     <button type="button" onClick={handleLogout}
                         className="text-secondary bg-secondary/20 flex items-center justify-center gap-4 p-4 rounded-md hover:cursor-pointer"
                     ><LogOut/> <p>Sair da conta</p></button>
