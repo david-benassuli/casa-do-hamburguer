@@ -43,7 +43,7 @@ export function OrdersMenu() {
                 <ButtonFilter type="delivered" filter={filterOrders} setFilter={setFilterOrders}>Entregues</ButtonFilter>
                 <ButtonFilter type="canceled" filter={filterOrders} setFilter={setFilterOrders}>Cancelados</ButtonFilter>
             </div>
-            {orders.length > 0 ? <div className="flex flex-row flex-wrap gap-5">
+            {orders.length > 0 ? <div className="flex flex-row flex-wrap gap-5 max-sm:justify-center">
                 {orders.filter(order => (order.status === filterOrders || !filterOrders)).map((order, index) => 
                 <CardOrders setOrders={setOrders}
                     key={order.id}

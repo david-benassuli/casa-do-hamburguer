@@ -61,11 +61,11 @@ export function AddProduct({ setOpenAddProduct }: AddProductProps) {
     }
 
     return (
-        <div className="fixed inset-0 z-1 bg-black/50 flex items-center justify-center">
-            <div className="bg-[#24201A] w-200 rounded-sm p-6 flex flex-col gap-5 text-text-low">
+        <div className="fixed inset-0 z-1 bg-black/50 flex items-center justify-center p-5">
+            <div className="bg-[#24201A] max-w-200 grow rounded-sm p-6 flex flex-col gap-5 text-text-low">
 
                 {/* Header */}
-                <div className="flex justify-between items-center">
+                <div className="flex justify-between items-center gap-5">
                     <h2 className="text-2xl text-text-low">
                         Adicionar produto
                     </h2>
@@ -77,7 +77,7 @@ export function AddProduct({ setOpenAddProduct }: AddProductProps) {
                     />
                 </div>
 
-                <div className="flex gap-5">
+                <div className="flex flex-row flex-wrap justify-center items-center gap-5">
 
                     <div className="w-52 h-52 shrink-0">
 
@@ -111,7 +111,7 @@ export function AddProduct({ setOpenAddProduct }: AddProductProps) {
 
                     </div>
 
-                    <div className="flex flex-col justify-between flex-1">
+                    <div className="flex flex-col justify-between flex-1 gap-2">
                         <input className="p-3 border border-text-low rounded-md  text-text-low" type="text" placeholder="Nome do produto"
                             onChange={(e) => setInputName(e.target.value)}
                         />

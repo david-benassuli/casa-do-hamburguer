@@ -48,7 +48,11 @@ export const postLogin = async (req, res) => {
 
 export const postLogout = async (req, res) => {
     try {
-        res.clearCookie('user')
+        res.clearCookie('user', {
+            httpOnly: true,
+            secure: true,
+            sameSite: "none",
+        })
         res.status(200).json({message: 'Usuário deslogado'})
 
     } catch(error) {
