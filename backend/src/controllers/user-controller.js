@@ -33,6 +33,9 @@ export const postLogin = async (req, res) => {
         const token = jwt.sign(userInfos, process.env.JWT_SECRET)
 
         res.cookie("user", token, {
+            httpOnly: true,
+            secure: true,
+            sameSite: "none",
             maxAge: 1000 * 60 * 60 * 24 * 7 // 7 dias
         })
 
