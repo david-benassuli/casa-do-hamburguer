@@ -55,7 +55,7 @@ export function CardProduct(props: CardProductProps) {
                     <p className="text-text-low text-xl">{props.desc}</p>
                 </div>
 
-                <div className="flex flex-row justify-between w-full text-md items-center flex-wrap-reverse gap-2">
+                <div className={`flex flex-row justify-between w-full text-md items-center flex-wrap-reverse gap-2 ${!user?.admin && 'justify-end'}`}>
                     {user?.admin && <button type="button" className="p-1 border border-my-red text-my-red uppercase rounded-md hover:cursor-pointer hover:text-my-red/60 hover:border-my-red/60 transition-colors duration-200"
                         onClick={() => {
                             setOpenModal(true)
